@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Loan Calculator";
+}
+
+<h2>Loan Calculator</h2>
+<row>
+    <label>Loan Amount</label>
+    <input type="text" name="loanAmount" id="loanAmount" required>
+</row>
+<row>
+    <label>Rate (%)</label>
+    <input type="text" name="rate" id="rate" required>
+</row>
+<row>
+    <label>Term</label>
+    <input type="text" name="terms" id="terms" required>
+</row>
+<row>
+    <button id="btnCalculate" class="btn btn-default" required>Calculate</button>
+</row>
+<row>
+    <div id="divPaymentSchedule"></div>
+</row>
+<script>
+    $(document).ready(function () {
+        $('#btnCalculate').click(function () {
+            if ($.isNumeric($('#loanAmount').val()) == false) {
+                alert("Please enter a valid number for Loan Amount.");
+                return false;
+            }
+
+            if ($('#loanAmount').val() < 0) {
+                alert("Please enter a positive number for Loan Amount.");
+                return false;
+            }
+
+            if ($.isNumeric($('#rate').val()) == false) {
+                alert("Please enter a valid number for Rate.");
+                return false;
+            }
+
+            //http://www.amortization-calc.com/ for reference, most typical loans have interest rates between 0 to 100% APR
+            if ($('#rate').val() < 0 || $('#rate').val() > 100) {
+                alert("Please enter a number between 0 to 100 for Rate.");
+                return false;
+            }
+
+            if ($.isNumeric($('#terms').val()) == false) {
+                alert("Please enter a valid number for Term.");
+                return false;
+            }
+
+            //http://www.amortization-calc.com/ for referece, decimal terms would not make sense
+            if (Math.floor($('#terms').val()) != $('#terms').val()) {
+                alert("Please enter an integer for Term.");
+                return false;
+            }
+
+            //Most loans are 30/15 year mortgages. Here we are capping at 50 year loan term.
+            if ($('#terms').val() < 0 || $('#terms').val() > 600) {
+                alert("Please enter a number between 1 to 600 for Term.");
+                return false;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/LoanCalculator/Calculate",
+                data: { loanAmt: $('#loanAmount').val(), rate: $('#rate').val(), terms: $("#terms").val() },
+                success: function (result) {
+                    $('#divPaymentSchedule').html(result);
+                },
+                error: function (errorData) {
+                    alert("Error Occured");
+                }
+            });
+        });
+    });
+</script>

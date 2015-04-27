@@ -1,0 +1,93 @@
+﻿<script>
+    $(document).ready(function () {
+        $('#btn1').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/ParagraphManipulation/ButtonClick",
+                data: { button: $('#btn1').val(), paragraphInput: $('#txtParagraphInput').val() },
+                success: function (result) {
+                    $('#txtParagraphOutput').html(result);
+                },
+                error: function (errorData) {
+                    alert("Error Occured");
+                }
+            });
+        });
+
+        $('#btn2').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/ParagraphManipulation/ButtonClick",
+                data: { button: $('#btn2').val(), paragraphInput: $('#txtParagraphInput').val() },
+                success: function (result) {
+                    $('#txtParagraphOutput').html(result);
+                },
+                error: function (errorData) {
+                    alert("Error Occured");
+                }
+            });
+        });
+
+        $('#btn3').click(function () {
+
+            $.ajax({
+                type: "POST",
+                url: "/ParagraphManipulation/ButtonClick",
+                data: { button: $('#btn3').val(), paragraphInput: $('#txtParagraphInput').val() },
+                success: function (result) {
+                    $('#txtParagraphOutput').html(result);
+                },
+                error: function (errorData) {
+                    alert("Error Occured");
+                }
+            });
+        });
+
+        $('#btn4').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/ParagraphManipulation/ButtonClick",
+                data: { button: $('#btn4').val(), paragraphInput: $('#txtParagraphInput').val() },
+                success: function (result) {
+                    $('#txtParagraphOutput').html(result);
+                },
+                error: function (errorData) {
+                    alert("Error Occured");
+                }
+            });
+        });
+    });
+</script>
+
+@{
+    ViewBag.Title = "Paragraph Manipulation";
+}
+
+<h2>Paragraph Manipulation</h2>
+
+<label>Input:</label>
+<div class="row">
+    <div class="col-md-9">
+        @Html.TextArea("txtParagraphInput", "", new { id = "txtParagraphInput", style = "width:500px;height:100px;" })
+    </div>
+</div>
+<label>Output:</label>
+<div class="row">
+    <div id="divResult" class="col-md-9">
+        @Html.TextArea("txtParagraphOutput", "", new { id = "txtParagraphOutput", style = "width:500px;height:100px;", disabled = "true" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1">
+        <button id="btn1" type="button" value="btnReverseParagraph">Reverse Paragraph</button>
+    </div>
+    <div class="col-md-1">
+        <button id="btn2" type="button" value="btnReverseParagraphWords">Reverse Paragraph Words</button>
+    </div>
+    <div class="col-md-1">
+        <button id="btn3" type="button" value="btnSortParagraphWords">Sort Paragraph Words</button>
+    </div>
+    <div class="col-md-1">
+        <button id="btn4" type="button" value="btnHashParagraph">Hash Paragraph</button>
+    </div>
+</div>
